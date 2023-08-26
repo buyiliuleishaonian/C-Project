@@ -1,0 +1,157 @@
+class Program
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            // 连接字符串，根据你的 SQL Server 配置进行相应的修改
+            string connectionString = "Data Source=YOUR_SERVER_NAME;Initial Catalog=master;Integrated Security=True;";
+
+            // 连接到 SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // 获取数据库列表
+                DataTable databases = connection.GetSchema("Databases");
+
+                // 打印数据库列表
+                Console.WriteLine("Available databases:");
+                foreach (DataRow row in databases.Rows)
+                {
+                    string databaseName = row["database_name"].ToString();
+                    Console.WriteLine(databaseName);
+                }
+
+                // 选择数据库
+                Console.Write("Enter the database name you want to generate the model for: ");
+                string selectedDatabase = Console.ReadLine();
+
+                // 检查数据库是否存在
+                if (databases.AsEnumerable().Any(row => row["database_name"].ToString().Equals(selectedDatabase, StringComparison.OrdinalIgnoreCase)))
+                {
+                    GenerateCSharpModel(selectedDatabase);
+                }
+                else
+                {
+                    Console.WriteLine("Selected database does not exist.");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+    }
+
+    static void GenerateCSharpModel(string databaseName)
+    {
+        try
+        {
+            // 连接字符串
+            string connectionString = $"Data Source=YOUR_SERVER_NAME;Initial Catalog={databaseName};Integrated Security=True;";
+
+            // 创建连接到选定的数据库
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // 获取所有表名
+                DataTable tables = connection.GetSchema("Tables");
+
+                // 遍历表，并为每个表生成 C# Model
+                foreach (DataRow tableRow in tables.Rows)
+                {
+                    string tableName = tableRow["TABLE_NAME"].ToString();
+                    string modelClassName = ToTitleCase(tableName); // 将表名转为 PascalCase
+
+                    // 查询表的所有列信息
+                    string query = $"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}'";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            // 创建 C# Model 的字符串
+                            StringBuilder modelCode = new StringBuilder();
+                            modelCode.AppendLine("public class " + modelClassName);
+                            modelCode.AppendLine("{");
+
+                            // 遍历列信息并为每列生成属性
+                            while (reader.Read())
+                            {
+                                string columnName = reader["COLUMN_NAME"].ToString();
+                                string dataType = reader["DATA_TYPE"].ToString();
+
+                                // 将 SQL Server 数据类型转换为 C# 数据类型
+                                string csharpDataType = GetCSharpDataType(dataType);
+
+                                // 生成属性
+                                modelCode.AppendLine("    public " + csharpDataType + " " + ToTitleCase(columnName) + " { get; set; }");
+                            }
+
+                            modelCode.AppendLine("}");
+                            modelCode.AppendLine();
+
+                            // 将 C# Model 代码写入文件
+                            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, modelClassName + ".cs");
+                            File.WriteAllText(filePath, modelCode.ToString());
+                        }
+                    }
+                }
+
+                Console.WriteLine("C# Models generated successfully.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+    }
+
+    // 辅助方法：将字符串转换为 PascalCase
+    static string ToTitleCase(string str)
+    {
+        string[] words = str.Split(new char[] { '_', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < words.Length; i++)
+        {
+            words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+        }
+        return string.Join("", words);
+    }
+
+    // 辅助方法：将 SQL Server 数据类型转换为 C# 数据类型
+    static string GetCSharpDataType(string sqlDataType)
+    {
+        switch (sqlDataType.ToLower())
+        {
+            case "bigint": return "long";
+            case "binary":
+            case "image":
+            case "varbinary": return "byte[]";
+            case "bit": return "bool";
+            case "char":
+            case "nchar":
+            case "ntext":
+            case "nvarchar":
+            case "text":
+            case "varchar": return "string";
+            case "date":
+            case "datetime":
+            case "datetime2":
+            case "smalldatetime": return "DateTime";
+            case "datetimeoffset": return "DateTimeOffset";
+            case "decimal":
+            case "money":
+            case "numeric":
+            case "smallmoney": return "decimal";
+            case "float": return "double";
+            case "int": return "int";
+            case "real": return "float";
+            case "smallint": return "short";
+            case "time": return "TimeSpan";
+            case "tinyint": return "byte";
+            case "uniqueidentifier": return "Guid";
+            default: return "object";
+        }
+    }
+}
