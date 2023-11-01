@@ -38,6 +38,9 @@
             this.lbl = new System.Windows.Forms.Label();
             this.cmbServer = new System.Windows.Forms.ComboBox();
             this.btnModel = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.infosname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnConSQL
@@ -122,6 +125,7 @@
             this.cmbServer.Name = "cmbServer";
             this.cmbServer.Size = new System.Drawing.Size(251, 23);
             this.cmbServer.TabIndex = 8;
+            this.cmbServer.SelectedValueChanged += new System.EventHandler(this.cmbServer_SelectedValueChanged);
             this.cmbServer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cmbServer_KeyDown);
             // 
             // btnModel
@@ -134,11 +138,33 @@
             this.btnModel.UseVisualStyleBackColor = true;
             this.btnModel.Click += new System.EventHandler(this.btnModel_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.infosname});
+            this.dataGridView1.Location = new System.Drawing.Point(507, 119);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 27;
+            this.dataGridView1.Size = new System.Drawing.Size(755, 307);
+            this.dataGridView1.TabIndex = 10;
+            // 
+            // infosname
+            // 
+            this.infosname.DataPropertyName = "InfosName";
+            this.infosname.HeaderText = "表名";
+            this.infosname.MinimumWidth = 6;
+            this.infosname.Name = "infosname";
+            this.infosname.Width = 125;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1361, 724);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnModel);
             this.Controls.Add(this.cmbServer);
             this.Controls.Add(this.lbl);
@@ -151,6 +177,7 @@
             this.Controls.Add(this.BtnConSQL);
             this.Name = "FrmMain";
             this.Text = "代码生成器";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,6 +195,8 @@
         private System.Windows.Forms.Label lbl;
         private System.Windows.Forms.ComboBox cmbServer;
         private System.Windows.Forms.Button btnModel;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn infosname;
     }
 }
 

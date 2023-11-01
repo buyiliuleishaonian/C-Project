@@ -1,4 +1,5 @@
-﻿using Sqlhelper;
+﻿using InfosClass;
+using Sqlhelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,12 +16,18 @@ namespace 代码生成器
     {
         private List<string> list = new List<string>();
 
+        private List<Infos> infosNameList=new List<Infos>();
+
+        private SqlHelper sqlHelper=new SqlHelper();
+ 
         public FrmMain()
         {
             InitializeComponent();
             //聚焦到其上
             this.txtServer.Focus();
             this.txtServer.SelectAll();
+            //将datagridview的自动生成行关闭
+            this.dataGridView1.AutoGenerateColumns=false;
         }
         
 
@@ -155,6 +162,24 @@ namespace 代码生成器
                 this.btnModel.Focus();
                 return;
             }
+        }
+
+        /// <summary>
+        /// 当我们选择了数据库，就将所有的表名读取到datafridview中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbServer_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (this.cmbServer.DataSource==null) return;
+            if (this.cmbServer.SelectedIndex>0)
+            {
+                infosNameList= sqlHelper.SelectInfosNameAndCellName(this.txtServer.Text, this.txtUid.Text, this.txtPwd.Text, this.cmbServer.Text);
+                this.dataGridView1.DataSource=null;
+                this.dataGridView1.DataSource=infosNameList;
+            }
+            else
+            { return; }
         }
     }
 }

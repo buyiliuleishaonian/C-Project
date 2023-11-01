@@ -12,3 +12,5 @@ F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生
 F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生成器\obj\Debug\代码生成器.csproj.CopyComplete
 F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生成器\obj\Debug\代码生成器.exe
 F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生成器\obj\Debug\代码生成器.pdb
+F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生成器\bin\Debug\InfosClass.dll
+F:\备份\C#项目\项目二代码生成器\SqlServer对应Model生成\代码生成器\bin\Debug\InfosClass.pdb

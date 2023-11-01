@@ -44,5 +44,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SqlDAL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InfosClass\InfosClass.csproj">
+      <Project>{87afcb71-22ca-4184-9b38-4b55bfda000c}</Project>
+      <Name>InfosClass</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

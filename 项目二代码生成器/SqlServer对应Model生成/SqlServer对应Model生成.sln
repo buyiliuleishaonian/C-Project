@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sqlhelper", "Sqlhelper\Sqlh
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Sql表对应的Model", "Sql表对应的Model\Sql表对应的Model.vdproj", "{F2220DD8-1518-4E8E-B25B-03647AA165D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfosClass", "InfosClass\InfosClass.csproj", "{87AFCB71-22CA-4184-9B38-4B55BFDA000C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{C2E63919-6F56-48C9-AFBB-9327B818247F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2220DD8-1518-4E8E-B25B-03647AA165D7}.Debug|Any CPU.ActiveCfg = Debug
 		{F2220DD8-1518-4E8E-B25B-03647AA165D7}.Release|Any CPU.ActiveCfg = Release
+		{87AFCB71-22CA-4184-9B38-4B55BFDA000C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87AFCB71-22CA-4184-9B38-4B55BFDA000C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87AFCB71-22CA-4184-9B38-4B55BFDA000C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87AFCB71-22CA-4184-9B38-4B55BFDA000C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -80,6 +80,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InfosClass\InfosClass.csproj">
+      <Project>{87afcb71-22ca-4184-9b38-4b55bfda000c}</Project>
+      <Name>InfosClass</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sqlhelper\Sqlhelper.csproj">
       <Project>{c2e63919-6f56-48c9-afbb-9327b818247f}</Project>
       <Name>Sqlhelper</Name>

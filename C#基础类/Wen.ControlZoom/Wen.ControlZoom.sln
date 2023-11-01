@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wen.ControlZoom", "Wen.ControlZoom\Wen.ControlZoom.csproj", "{3D4F3097-9B09-4FEE-8B6B-DA6D820D5F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wen.TestControlZoom", "Wen.TestControlZoom\Wen.TestControlZoom.csproj", "{83B7A99C-BE0E-40F7-BB90-A76DA7E7779A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D4F3097-9B09-4FEE-8B6B-DA6D820D5F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4F3097-9B09-4FEE-8B6B-DA6D820D5F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4F3097-9B09-4FEE-8B6B-DA6D820D5F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4F3097-9B09-4FEE-8B6B-DA6D820D5F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B7A99C-BE0E-40F7-BB90-A76DA7E7779A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B7A99C-BE0E-40F7-BB90-A76DA7E7779A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B7A99C-BE0E-40F7-BB90-A76DA7E7779A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B7A99C-BE0E-40F7-BB90-A76DA7E7779A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15CB2CEF-7CA6-42D7-AD5B-A2560437CBE1}
+	EndGlobalSection
+EndGlobal

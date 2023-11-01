@@ -1,9 +1,11 @@
-﻿using System;
+﻿using InfosClass;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,7 +52,8 @@ namespace Sqlhelper
         }
 
         /// <summary>
-        /// 用sql语句，select name from sys.databases
+        /// 用sql语句将所有的数据库名读取出来
+        /// ，select name from sys.databases
         /// </summary>
         /// <param name="datasource">服务器</param>
         /// <param name="uid">用户名</param>
@@ -66,6 +69,7 @@ namespace Sqlhelper
                 using (SqlConnection con = new SqlConnection(sqlstr))
                 {
                     con.Open();
+                    //通过读取视图中的所有
                     SqlCommand cmd = new SqlCommand("select name from sys.databases", con);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -84,17 +88,17 @@ namespace Sqlhelper
             }
         }
 
-       /// <summary>
-       /// 连接数据库，将数据库中的表转为Model
-       /// </summary>
-       /// <param name="datasource">服务器</param>
-       /// <param name="uid">用户名</param>
-       /// <param name="pwd">密码</param>
-       /// <param name="sqlName">数据库名称</param>
-       /// <param name="path">存放文件夹的路径</param>
-       /// <param name="pathName">文件夹名</param>
-       /// <returns></returns>
-        public static StringBuilder GetModel(string datasource, string uid, string pwd, string sqlName,string path,string pathName)
+        /// <summary>
+        /// 连接数据库，将数据库中的表转为Model
+        /// </summary>
+        /// <param name="datasource">服务器</param>
+        /// <param name="uid">用户名</param>
+        /// <param name="pwd">密码</param>
+        /// <param name="sqlName">数据库名称</param>
+        /// <param name="path">存放文件夹的路径</param>
+        /// <param name="pathName">文件夹名</param>
+        /// <returns></returns>
+        public static StringBuilder GetModel(string datasource, string uid, string pwd, string sqlName, string path, string pathName)
         {
             string sqlstr = $"server={datasource};uid={uid};password={pwd};database={sqlName}";
             StringBuilder modelCode = null;
@@ -115,7 +119,7 @@ namespace Sqlhelper
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             // 创建 C# Model 的字符串
-                             modelCode = new StringBuilder();
+                            modelCode = new StringBuilder();
                             modelCode.AppendLine("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;" +
                                 "\r\nusing System.Text;\r\nusing System.Threading.Tasks;"
                                 +"\r\n"+ $"namespace {pathName}"+"\r\n{" +"\r\n"+ "public class " + modelClassName);
@@ -145,6 +149,32 @@ namespace Sqlhelper
                 return modelCode;
             }
         }
+
+        /// <summary>
+        /// 将选择的数据库中的所有表名读取出来
+        /// </summary>
+        /// <param name="datasource"></param>
+        /// <param name="uid"></param>
+        /// <param name="pwd"></param>
+        /// <param name="sqlName"></param>
+        /// <returns></returns>
+        public List<Infos> SelectInfosNameAndCellName(string datasource, string uid, string pwd, string sqlName)
+        {
+            string sqlstr = $"server={datasource};uid={uid};password={pwd};database={sqlName}";
+            //首先我们需要将所选择的数据库中的所有表读取出来
+            SqlConnection con = new SqlConnection(sqlstr);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select table_name=t.name from sys.tables t", con);
+            SqlDataReader sdr = cmd.ExecuteReader();
+            List<Infos> list = new List<Infos>();
+            while (sdr.Read())
+            {
+                list.Add(new Infos{ InfosName= sdr["table_name"].ToString() }) ;
+            }
+            con.Close();
+            return list;    
+        }
+
 
         // 辅助方法：将字符串转换为 PascalCase
         static string ToTitleCase1(string str)
