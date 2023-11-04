@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace Wen.ControlLib
 {
     /// <summary>
-    /// 扩展Panel控件
+    /// 扩展Panel控件，在Panel容器中，绘制一个矩形
     /// </summary>
     public partial class PanelEx : Panel
     {

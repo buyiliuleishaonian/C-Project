@@ -16,5 +16,10 @@ namespace Wen.THproject
         {
             InitializeComponent();
         }
+
+        private void checkBoxEX1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

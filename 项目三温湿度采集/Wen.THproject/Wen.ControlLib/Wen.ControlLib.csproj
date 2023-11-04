@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckBoxEX.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CheckBoxEX.Designer.cs">
+      <DependentUpon>CheckBoxEX.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialPlate.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -67,6 +73,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="THMControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="THMControl.Designer.cs">
+      <DependentUpon>THMControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TitleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TitleControl.Designer.cs">
+      <DependentUpon>TitleControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DialPlate.resx">
@@ -78,6 +96,12 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="THMControl.resx">
+      <DependentUpon>THMControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TitleControl.resx">
+      <DependentUpon>TitleControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LeftUnSelected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TitleBG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace Wen.ControlLib
 {
+    /// <summary>
+    /// 绘制的是仪表盘控件
+    /// </summary>
     public partial class DialPlate : UserControl
     {
         public DialPlate()
@@ -21,7 +24,13 @@ namespace Wen.ControlLib
             this.SetStyle(ControlStyles.DoubleBuffer, true);
             ////表明控件在调整大小之后重绘
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.Selectable,true);
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor,true);
+
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment =StringAlignment.Center;
         }
+        private StringFormat stringFormat=new   StringFormat();
 
         //重要代码，就是改变属性之后，马上进行控件重绘 this.Invalidate(),用于自定义控件的类
 
@@ -86,10 +95,11 @@ namespace Wen.ControlLib
         #endregion
 
         #region  内环设计，比例scale，默认0.8f,低于1.0f，颜色，宽度,温度temperature，湿度humidity
-        private float tempScale = 0.8f;
+
+        private float tempScale = 0.6f;
         [Browsable(true)]
         [Category("自定义")]
-        [Description("设定或获取温度内环比例")]
+        [Description("设定或获取温度内环比例，相对于控件的宽度的比列，用来获取x值")]
         public float TempScale
         {
             get { return tempScale; }
@@ -116,17 +126,17 @@ namespace Wen.ControlLib
         }
 
 
-        private float humidithScale = 0.8f;
+        private float humidithScale = 0.35f;
         [Browsable(true)]
         [Category("自定义")]
-        [Description("设定或获取湿度内环比例")]
+        [Description("设定或获取湿度内环比例,相对于控件的宽度的比列，用来获取x值")]
         public float HumidityScale
         {
-            get { return tempScale; }
+            get { return humidithScale; }
             set
             {
                 if (value>1.0f) return;
-                tempScale = value;
+                humidithScale = value;
                 this.Invalidate();
             }
         }
@@ -152,7 +162,9 @@ namespace Wen.ControlLib
         public int InThickness
         {
             get { return inThickness; }
-            set { inThickness = value; }
+            set { inThickness = value;
+                this.Invalidate();
+            }
         }
 
         #endregion
@@ -173,32 +185,32 @@ namespace Wen.ControlLib
             }
         }
 
-        private float ringMin = 0.0f;
+        private float rangeMin = 0.0f;
         [Browsable(true)]
         [Category("自定义")]
         [Description("设定或获取刻度低限")]
-        public float RingMin
+        public float RangeMin
         {
-            get { return ringMin; }
+            get { return rangeMin; }
             set
             {
-                if (value>RingMax) return;
-                ringMin = value;
+                if (value>RangeMax) return;
+                rangeMin = value;
                 this.Invalidate();
             }
         }
 
-        private float ringMax = 90.0f;
+        private float rangeMax = 90.0f;
         [Browsable(true)]
         [Category("自定义")]
         [Description("设定或获取刻度高限")]
-        public float RingMax
+        public float RangeMax
         {
-            get { return ringMax; }
+            get { return rangeMax; }
             set
             {
-                if (value< this.RingMin) return;
-                ringMax = value;
+                if (value< this.RangeMin) return;
+                rangeMax = value;
                 this.Invalidate();
             }
         }
@@ -217,15 +229,15 @@ namespace Wen.ControlLib
             }
             set
             {
-                if (value<this.RingMin)
+                if (value<this.RangeMin)
                 {
-                    value=this.RingMin;
+                    value=this.RangeMin;
+                }
+                if (value>this.RangeMax)
+                {
+                    value = this.RangeMax;
                 }
                 tempValue = value;
-                if (tempValue>this.RingMax)
-                {
-                    tempValue = this.RingMax;
-                }
                 this.Invalidate();
             }
         }
@@ -242,13 +254,13 @@ namespace Wen.ControlLib
             }
             set
             {
-                if (value<this.RingMin)
+                if (value<this.RangeMin)
                 {
-                    value= this.RingMin;
+                    value= this.RangeMin;
                 }
-                if (humidityValue>this.RingMax)
+                if (value>this.RangeMax)
                 {
-                    humidityValue = this.RingMax;
+                    value = this.RangeMax;
                 }
                 humidityValue = value;
                 this.Invalidate();
@@ -269,6 +281,7 @@ namespace Wen.ControlLib
             //这指定了在绘制文本时要使用 ClearType 技术以更好地渲染文本。
             //ClearType 是一种亚像素抗锯齿技术，用于改善文本的清晰度和可读性。
             graphics.TextRenderingHint=System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            #region  绘制外圆环
             //规定this.width<=20&&this.higth<=20，无效
             //高度小于宽度的一半，无效
             if (this.Width<=20||this.Height<=20) return;
@@ -278,10 +291,10 @@ namespace Wen.ControlLib
             //绘画刻度线：转移坐标系，TranslateTranform()；旋转坐标系RotateTranSform();还需要判断角度，是在报警还是外圆
             Pen pen = new Pen(AlarmColor, OutThickness);
             //绘制报警
-            graphics.DrawArc(pen, new Rectangle(10, 10, this.Width-20, this.Width-20), 180, AlarmAngel);
+            graphics.DrawArc(pen, new RectangleF(10, 10, this.Width-20, this.Width-20), 180, AlarmAngel);
             //绘制外环
             pen=new Pen(RingColor, OutThickness);
-            graphics.DrawArc(pen, new Rectangle(10, 10, this.Width-20, this.Width-20), 180+AlarmAngel, 180-AlarmAngel);
+            graphics.DrawArc(pen, new RectangleF(10, 10, this.Width-20, this.Width-20), 180+AlarmAngel, 180-AlarmAngel);
 
             //平移坐标系(一般坐标系以控件左上角为原点，向右为x正，向下为y正)
             graphics.TranslateTransform(this.Width/2, this.Width/2);
@@ -302,10 +315,63 @@ namespace Wen.ControlLib
                 graphics.FillRectangle(brush, new RectangleF(x, y, width, hegiht));
                 graphics.RotateTransform(30);
             }
-            //在画内环，
+            #endregion
 
-            //显示刻度值
-            //显示实时的温湿度值
+            #region  绘制刻度线文本
+
+
+            // 绘制刻度值
+            // 1、首先讲坐标系转到回到平移之后的坐标系
+            graphics.RotateTransform(-210);
+            graphics.RotateTransform(90);
+            //2、绘制刻度，每个间隔值是多少
+            float rangeAvg = (RangeMax-RangeMin)%6==0 ? Convert.ToSingle(rangeMax-RangeMin)/6 :
+                Convert.ToSingle(((rangeMax-rangeMin)/6).ToString("f1"));
+
+            // 3、要循环绘制，顺时针标记，从小到大标记，从-180度的地方开始标记，这里就是依靠刻度比列（通过最大最小值除以标记总个数）
+            for (int i = 0; i < 7; i++)
+            {
+                float slace = -180f+i*30f;
+                // 首先要得到需要绘制的高度和宽度，坐标
+                // 4、通过Grapics，算出文本大小
+                float x = Convert.ToSingle(this.Width*this.TextScale*0.5f*Math.Cos(slace*Math.PI/180.0f));
+                float y = Convert.ToSingle(this.Width*this.TextScale*0.5f*Math.Sin(slace*Math.PI/180.0f));
+
+                string text = ((rangeAvg*i+RangeMin)).ToString();
+                //存储一对有序的浮点数对，一般为矩形的高度和宽度
+                SizeF size = graphics.MeasureString(text, this.Font);
+                //存储一组浮点数（4个）,表示坐标，长，宽
+                RectangleF rc = new RectangleF(x-size.Width*0.5f, y, size.Width, size.Height);
+                graphics.DrawString(text, this.Font, new SolidBrush(this.ForeColor), rc, stringFormat);
+            }
+            #endregion
+
+            //绘制温湿度的圆弧
+            //1、首先得到读取到TempSlace的值，通过计算是多个刻度值来绘制,角度
+            //2、创建pen,颜色，宽度
+            pen=new Pen(tempColor, this.inThickness);
+            float sweepAangle = (tempValue-rangeMin)/(rangeMax-RangeMin)*180.0f;
+
+            //3、绘制圆弧的坐标，和绘制报警圆弧，是一样的
+            #region  方法一，绘制温湿度 圆弧
+            //温度
+            graphics.DrawArc(pen, new RectangleF(this.Width*0.5f*this.TempScale*(-1.0f), this.Width*0.5f*this.TempScale*(-1f),
+                (this.Width*this.TempScale), (this.Width*this.TempScale)), -180f, sweepAangle);
+
+            //湿度
+            pen=new Pen(humidityColor,InThickness);
+            float humidityAangle = (humidityValue-rangeMin)/(rangeMax-rangeMin)*180.0f;
+            graphics.DrawArc(pen, new RectangleF(this.Width*0.5f*this.HumidityScale*(-1.0f), this.Width*0.5f*this.HumidityScale*(-1f),
+               (this.Width*this.HumidityScale), (this.Width*this.HumidityScale)), -180f, humidityAangle);
+            #endregion
+
+            //#region 方法二 将坐标系平移回去
+            //graphics.TranslateTransform(-this.Width/2,-this.Width/2);
+            ////绘制温度
+            //graphics.DrawArc(pen, new RectangleF((this.Width-this.Width*this.TempScale)/2, (this.Width-this.Width*this.TempScale)/2, (this.Width*this.TempScale), (this.Width*this.TempScale)), -180f, sweepAangle);
+            ////绘制湿度
+            //graphics.DrawArc(pen,new RectangleF((this.Width-this.Width*this.HumidityScale)/2, (this.Width-this.Width*this.HumidityScale)/2,(this.Width*this.HumidityScale),(this.Width*this.HumidityScale)),-180f,humidityAangle);
+            //#endregion
         }
     }
 }
