@@ -81,7 +81,7 @@ namespace Wen.ControlLib
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            //重绘背景板
+            //重绘背景板,将原有控件上的所有绘制清空
             base.OnPaintBackground(e);
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -104,7 +104,7 @@ namespace Wen.ControlLib
             //这里绘制的意思，就收集是否选择该控件，选中则绘制 勾选
             if (this.CheckState==CheckState.Checked)
             {
-                GraphicChecked(graphics,checkRec,Color.Red);
+                GraphicChecked(graphics,checkRec,Color.Black);
             }
             //绘制文本
             graphics.DrawString(this.Text,this.Font,new SolidBrush(this.ForeColor),textRec,stringFormat);
@@ -112,21 +112,25 @@ namespace Wen.ControlLib
 
 
             #region 自己的方法绘制勾选框和文本款
-            ////勾选框，和文本就是相当于两个 矩形框
-            ////1、勾选框
+            //勾选框，和文本就是相当于两个 矩形框
+            //1、勾选框
             //Pen pen = new Pen(this.CheckBoxColor);
             //float x = this.Width*0.1f;
             //float y = this.Width*0.1f;
-
+            //RectangleF checkRec = new RectangleF(x, y, this.DoubleCheckBoxWidth, this.DoubleCheckBoxWidth);
             //graphics.DrawRectangle(pen, x, y, this.DoubleCheckBoxWidth, this.DoubleCheckBoxWidth);
+            //if (this.CheckState==CheckState.Checked)
+            //{
+            //    GraphicChecked(graphics,checkRec,Color.Red); 
+            //}
 
             ////2、文本框
-            //SizeF size = graphics.MeasureString(textCheckBox,this.Font);
-            // x = this.Width*0.3f;
-            // y = this.Width*0.1f;
-            //RectangleF rcf = new RectangleF(x,y,size.Width,size.Height);
+            //SizeF size = graphics.MeasureString(textCheckBox, this.Font);
+            //x = this.Width*0.3f;
+            //y = this.Width*0.1f;
+            //RectangleF rcf = new RectangleF(x, y, size.Width, size.Height);
 
-            //graphics.DrawString(textCheckBox,this.Font, new SolidBrush(this.ForeColor),rcf,stringFormat);
+            //graphics.DrawString(textCheckBox, this.Font, new SolidBrush(this.ForeColor), rcf, stringFormat);
             #endregion
         }
 

@@ -18,11 +18,11 @@ namespace Wen.ControlLib
         public THMControl()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint,true);
-            this.SetStyle(ControlStyles.DoubleBuffer,true);
-            this.SetStyle(ControlStyles.Selectable,true);
-            this.SetStyle(ControlStyles.ResizeRedraw,true);
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor,true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.Selectable, true);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
         }
 
         //设定属性，来更改控件的Title
@@ -30,7 +30,7 @@ namespace Wen.ControlLib
         [Browsable(true)]
         [Category("自定义")]
         [Description("设定或获取控件开头")]
-        public string  Title
+        public string Title
         {
             get { return title; }
             set { title = value;
@@ -66,7 +66,7 @@ namespace Wen.ControlLib
         [Browsable(true)]
         [Category("自定义")]
         [Description("设定或获取湿度值")]
-        public string Humidity  
+        public string Humidity
         {
             get { return humidity; }
             set
@@ -91,28 +91,42 @@ namespace Wen.ControlLib
         private bool alarmColor;
         [Browsable(true)]
         [Category("自定义")]
-        [Description("显示或获取报警休息")]
+        [Description("显示或获取报警信息")]
         public bool AlarmColor
         {
             get { return alarmColor; }
             set {
                 alarmColor = value;
-                this.lbl_Title.BackColor=alarmColor ? Color.Red:Color.FromArgb(36, 184, 196);
+                this.lbl_Title.BackColor=alarmColor ? Color.Red : Color.FromArgb(36, 184, 196);
             }
         }
 
         //温度绑定的变量名称，湿度绑定的变量名称，状态绑定的变量名称
+        public string tempValueName;
+        [Browsable(true)]
+        [Category("自定义")]
+        [Description("湿度模块名")]
         /// <summary>
-        /// w温度值绑定的变量名称
+        /// 温度值绑定的变量名称
         /// </summary>
         public string TempValueName { get; set; } = string.Empty;
+
+        public string humidityValueName;
+        [Browsable(true)]
+        [Category("自定义")]
+        [Description("湿度模块名")]
         /// <summary>
         /// 湿度值绑定的变量名称
         /// </summary>
-        public string HumidityValueName { get; set; }=string.Empty;
+        public string HumidityValueName { get; set; } = string.Empty;
+
+        public string  stateValueName;
+        [Browsable(true)]
+        [Category("自定义")]
+        [Description("设定或显示状态绑定的变量名")]
         /// <summary>
         /// 报警地址绑定名称
         /// </summary>
-        public string AlarmValueName { get; set; } = string.Empty;
+        public string StateValueName { get; set; } = string.Empty;
     }
 }

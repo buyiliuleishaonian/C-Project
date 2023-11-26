@@ -42,3 +42,14 @@ F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.THprojec
 F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.csproj.CopyComplete
 F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.exe
 F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.pdb
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmGroupConfig.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\MiniExcel.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmMsgBoxWithoutAck.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmMsgBoxWithAck.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.Common.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.Common.pdb
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\thinger.DataConvertLib.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmVariableConfig.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmModify.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Newtonsoft.Json.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Newtonsoft.Json.xml

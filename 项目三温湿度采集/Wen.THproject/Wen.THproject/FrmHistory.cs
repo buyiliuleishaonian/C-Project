@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace Wen.THproject
 {
+    /// <summary>
+    /// 历史趋势窗体
+    /// </summary>
     public partial class FrmHistory : Form
     {
         public FrmHistory()

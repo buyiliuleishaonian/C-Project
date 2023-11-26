@@ -52,9 +52,11 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.corePanel = new Wen.ControlLib.PanelEx();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.scrollingAlarm = new SeeSharpTools.JY.GUI.ScrollingText();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.MiddlePanel.SuspendLayout();
+            this.AlarmPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.corePanel.SuspendLayout();
             this.SuspendLayout();
@@ -253,6 +255,7 @@
             // AlarmPanel
             // 
             this.AlarmPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AlarmPanel.BackgroundImage")));
+            this.AlarmPanel.Controls.Add(this.scrollingAlarm);
             this.AlarmPanel.Location = new System.Drawing.Point(937, 12);
             this.AlarmPanel.Name = "AlarmPanel";
             this.AlarmPanel.Size = new System.Drawing.Size(285, 38);
@@ -366,6 +369,25 @@
             this.MainPanel.Size = new System.Drawing.Size(1420, 720);
             this.MainPanel.TabIndex = 0;
             // 
+            // scrollingAlarm
+            // 
+            this.scrollingAlarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(28)))), ((int)(((byte)(68)))));
+            this.scrollingAlarm.BorderColor = System.Drawing.Color.Transparent;
+            this.scrollingAlarm.BorderVisible = true;
+            this.scrollingAlarm.Cursor = System.Windows.Forms.Cursors.Default;
+            this.scrollingAlarm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollingAlarm.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold);
+            this.scrollingAlarm.ForeColor = System.Drawing.Color.White;
+            this.scrollingAlarm.Location = new System.Drawing.Point(0, 0);
+            this.scrollingAlarm.Name = "scrollingAlarm";
+            this.scrollingAlarm.Padding = new System.Windows.Forms.Padding(3);
+            this.scrollingAlarm.ScrollDirection = SeeSharpTools.JY.GUI.ScrollingText.TextDirection.RightToLeft;
+            this.scrollingAlarm.ScrollSpeed = 25;
+            this.scrollingAlarm.Size = new System.Drawing.Size(285, 38);
+            this.scrollingAlarm.TabIndex = 0;
+            this.scrollingAlarm.Text = "当前系统无报警";
+            this.scrollingAlarm.VerticleAligment = SeeSharpTools.JY.GUI.ScrollingText.TextVerticalAlignment.Center;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -377,15 +399,18 @@
             this.Controls.Add(this.TopPanel);
             this.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.TopPanel.ResumeLayout(false);
             this.TopPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.MiddlePanel.ResumeLayout(false);
             this.MiddlePanel.PerformLayout();
+            this.AlarmPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.corePanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -417,6 +442,7 @@
         private ControlLib.NaviButton naviButton4;
         private ControlLib.PanelEx corePanel;
         private System.Windows.Forms.Panel MainPanel;
+        private SeeSharpTools.JY.GUI.ScrollingText scrollingAlarm;
     }
 }
 

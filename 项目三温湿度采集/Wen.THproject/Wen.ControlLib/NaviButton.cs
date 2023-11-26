@@ -97,11 +97,11 @@ namespace Wen.ControlLib
             }
         }
 
-        //添加一个事件，保证单击此控件，触发控件的Text更改，已经BackGroundImage
+        //添加一个事件，保证单击此控件，触发控件的Text更改，以及BackGroundImage
         public new EventHandler Click;
         [Browsable(true)]
         [Category("自定义单击事件")]
-        [Description("设置或显示导航按钮文本呢内容")]
+        [Description("设置或显示导航按钮文本内容")]
 
         /// <summary>
         /// 单击控件中的Label，判断是否已经创建了一个单击事件，创建了，就调用该事件

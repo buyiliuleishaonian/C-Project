@@ -20,3 +20,11 @@ F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.ControlL
 F:\备份\C#项目\C-Project\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.pdb
 F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.THMControl.resources
 F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.TitleControl.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\bin\Debug\MiniExcel.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.csproj.CopyComplete
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.TextSet.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\bin\Debug\SeeSharpTools.JY.GUI.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.TextSetEX.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\bin\Debug\MTHModels.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\bin\Debug\MTHModels.pdb
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.ControlLib\obj\Debug\Wen.ControlLib.RecipeControl.resources
