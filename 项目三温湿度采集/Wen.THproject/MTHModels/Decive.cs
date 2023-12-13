@@ -31,7 +31,7 @@ namespace MTHModels
         /// <summary>
         /// 通信状态标志位
         /// </summary>
-        public bool IsConnected { get; set; }
+        public bool IsConnected { get; set; } = false;
 
         /// <summary>
         ///当前配方名
@@ -80,6 +80,7 @@ namespace MTHModels
             }
             CheckAralm(variable);
         }
+
         //判断是否产生了下降沿和上升沿的报警检测
         //先判断上升沿检测，会存在一个缓冲值，做到一个作比较的作用，来判断是否产生了上升沿，比如从0-1
         //之后值为1，只有当值又变为0之后，又从0-1，才叫上升沿报警，每次判断完之后，都需要将最新的值

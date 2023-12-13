@@ -53,3 +53,8 @@ F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debu
 F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmModify.resources
 F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Newtonsoft.Json.dll
 F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Newtonsoft.Json.xml
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.MTHDAL.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.MTHDAL.pdb
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\obj\Debug\Wen.THproject.FrmLogin.resources
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.MTHBLL.dll
+F:\备份\C#项目\项目三温湿度采集\Wen.THproject\Wen.THproject\bin\Debug\Wen.MTHBLL.pdb

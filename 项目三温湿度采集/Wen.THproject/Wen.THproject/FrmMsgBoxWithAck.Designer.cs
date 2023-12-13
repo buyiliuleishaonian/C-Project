@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMsgBoxWithAck));
             this.lbl_Title = new System.Windows.Forms.Label();
             this.btn_Close = new System.Windows.Forms.Button();
             this.lbl_Text = new System.Windows.Forms.Label();
@@ -119,6 +120,7 @@
             this.Controls.Add(this.lbl_Title);
             this.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmMsgBoxWithAck";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

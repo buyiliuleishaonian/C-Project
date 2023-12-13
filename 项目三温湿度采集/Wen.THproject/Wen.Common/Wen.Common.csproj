@@ -62,7 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializable2.cs" />
     <Compile Include="SerializeObjectToString.cs" />
-    <Compile Include="SQL.cs" />
+    <Compile Include="SQLHelper.cs" />
     <Compile Include="StringSecurity.cs" />
   </ItemGroup>
   <ItemGroup>

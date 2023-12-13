@@ -30,6 +30,11 @@ namespace Wen.THproject
         /// </summary>
         public static ModbusTCP Modbus { get; set; }=new ModbusTCP();
 
+        /// <summary>
+        /// 当前用户对象
+        /// </summary>
+        public static SysAdminModel CurrentAdmin { get; set; }
+
         //写一个大小端
         /// <summary>
         /// 定义为大端

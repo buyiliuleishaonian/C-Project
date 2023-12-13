@@ -12,6 +12,9 @@ namespace Wen.ControlLib
 {
     public partial class CheckBoxEX : CheckBox
     {
+        /// <summary>
+        /// 扩展一个CheckBox控件的组件
+        /// </summary>
         public CheckBoxEX()
         {
             InitializeComponent();

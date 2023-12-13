@@ -16,7 +16,17 @@ namespace Wen.THproject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            FrmLogin frmLogin = new FrmLogin();
+            frmLogin.TopMost=true;
+            DialogResult dialogResult= frmLogin.ShowDialog();
+            if (dialogResult==DialogResult.OK)
+            {
+                Application.Run(new FrmMain());
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
     }
 }

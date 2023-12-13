@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace Wen.ControlLib
 {
     /// <summary>
-    /// Panel加强版，窗体空间很多，有一定的闪烁，
+    /// Panel加强版的组件，窗体空间很多，有一定的闪烁，
     /// 在窗体下，用panel加强版当作底层来解决整个问题,也就是将一个panel加强版控件当作背景图片
     /// </summary>
     public partial class PanelEnhanced : Panel

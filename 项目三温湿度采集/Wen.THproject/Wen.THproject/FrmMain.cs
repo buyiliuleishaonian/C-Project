@@ -13,10 +13,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using thinger.DataConvertLib;
 using Wen.Common;
 using Wen.ControlLib;
+using Wen.MTHBLL;
 
 namespace Wen.THproject
 {
@@ -32,7 +34,75 @@ namespace Wen.THproject
             //绘制窗体之后再无法移动
 
             //ObservableCollection这个动态集合，包含一个集合数量发生改变会触发一个事件CollectionChanged
-            actualAlarmList.CollectionChanged+=ActualAlarmList_CollectionChanged;
+            this.actualAlarmList.CollectionChanged+=ActualAlarmList_CollectionChanged;
+
+
+            this.Load+=FrmMain_Load;
+
+            //初始化System.Timers.Timer对象
+            this.timer.Interval=1000;
+            this.timer.Elapsed+=this.Timer_Elapsed;
+            this.timer.AutoReset=true;//表示是否重复计时
+
+            //将所有的NaviButton控件添加到集合中
+            this.listNaviButton.Add(this.naviButton1);
+            this.listNaviButton.Add(this.naviButton2);
+            this.listNaviButton.Add(this.naviButton3);
+            this.listNaviButton.Add(this.naviButton4);
+            this.listNaviButton.Add(this.naviButton5);
+            this.listNaviButton.Add(this.naviButton6);
+        }
+
+        /// <summary>
+        /// 系统定时器，每隔一秒钟，触发一次,用来将各个站点的数据写入到数据库中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            //更新当前的时间显示,通信状态
+            this.Invoke(new Action(() => 
+            {
+                this.lbl_CurrentTime.Text=DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss dddd");
+                this.led_CommState.Value=CommonModel.Decive.IsConnected;
+            }));
+            //判断Decive的ISconnect是否正常
+            if (CommonModel.Decive.IsConnected)
+            {
+                bool result = CommonModel.Decive["模块1温度"]!=null;
+                result &= CommonModel.Decive["模块1湿度"]!=null;
+                result &=CommonModel.Decive["模块2温度"]!=null;
+                result &=CommonModel.Decive["模块2湿度"]!=null;
+                result &=CommonModel.Decive["模块3温度"]!=null;
+                result &=CommonModel.Decive["模块3湿度"]!=null;
+                result &=CommonModel.Decive["模块4温度"]!=null;
+                result &=CommonModel.Decive["模块4湿度"]!=null;
+                result &=CommonModel.Decive["模块5温度"]!=null;
+                result &=CommonModel.Decive["模块5湿度"]!=null;
+                result &=CommonModel.Decive["模块6温度"]!=null;
+                result &=CommonModel.Decive["模块6湿度"]!=null;
+                if (result)
+                {
+                    string time = CurrentTime;
+                     actualDataBll.AddActualData(new ActualData()
+                    {
+                        InsertTime=time,
+                        Station1Temp=CommonModel.Decive["模块1温度"].ToString(),
+                        Station1Humidity=CommonModel.Decive["模块1湿度"].ToString(),
+                        Station2Temp=CommonModel.Decive["模块2温度"].ToString(),
+                        Station2Humidity=CommonModel.Decive["模块2湿度"].ToString(),
+                        Station3Temp=CommonModel.Decive["模块3温度"].ToString(),
+                        Station3Humidity=CommonModel.Decive["模块3湿度"].ToString(),
+                        Station4Temp=CommonModel.Decive["模块4温度"].ToString(),
+                        Station4Humidity=CommonModel.Decive["模块4湿度"].ToString(),
+                        Station5Temp=CommonModel.Decive["模块5温度"].ToString(),
+                        Station5Humidity=CommonModel.Decive["模块5湿度"].ToString(),
+                        Station6Temp=CommonModel.Decive["模块6温度"].ToString(),
+                        Station6Humidity=CommonModel.Decive["模块6湿度"].ToString(),
+                    });
+                }
+            }
         }
 
         #region 配置文件
@@ -42,6 +112,10 @@ namespace Wen.THproject
         private string groupPath = Application.StartupPath+@"\Group\group.xlsx";
         //创建Excel文件路径
         private string variablePath = Application.StartupPath+@"\Variable\variable.xlsx";
+
+        //可以监视的集合,动态可监视的集合，可以在项目，添加，删除或刷新整个列表的提供通知，
+        private ObservableCollection<string> actualAlarmList = new ObservableCollection<string>();
+
         #endregion
 
         #region 加载设备信息
@@ -57,12 +131,12 @@ namespace Wen.THproject
             //也要先判断deciveable文件是否存在
             if (!File.Exists(decivePath))
             {
-                CommonModel.AddLog(1,"设备文件不存在");
+                CommonModel.AddLog(1, "设备文件不存在");
                 return null;
             }
             //解析通信组和通信变量
             //判断通信组和通信变量是存在
-            List<Group> groupList = LoadGroup(groupPath,variablePath);
+            List<Group> groupList = LoadGroup(groupPath, variablePath);
             if (groupPath!=null)
             {
                 try
@@ -92,6 +166,12 @@ namespace Wen.THproject
             //直接返回null
         }
         //通信组和通信变量解析
+        /// <summary>
+        /// 通过通信组和通信变量的路径，解析出通信组和通信变量
+        /// </summary>
+        /// <param name="groupPath">通信组路径</param>
+        /// <param name="variablePath">通信变量路径</param>
+        /// <returns></returns>
         private List<Group> LoadGroup(string groupPath, string variablePath)
         {
             //从GroupPath，VariablePath路径下读取Group，Varable的文件返回List<Group>  方法名LoadgGroup
@@ -147,11 +227,43 @@ namespace Wen.THproject
         }
         #endregion
 
-        #region 多线程的取消源，以及手动停止对象,以及Modbus通信对象
-        private CancellationTokenSource cts= new CancellationTokenSource();
+        #region 多线程的取消源，以及手动停止对象，以及SysLogBLL对象，程序启动时间，实时数据ActualDataBLL,创建一个System的Timer对象
+        /// <summary>
+        /// 取消读取数据库的多线程
+        /// </summary>
+        private CancellationTokenSource cts = new CancellationTokenSource();
 
+        /// <summary>
+        /// 手动暂停和继续多线程
+        /// </summary>
         private ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
+        /// <summary>
+        /// 日志访问逻辑层对象
+        /// </summary>
+        private SysLogBLL sysLogBll = new SysLogBLL();
+
+        /// <summary>
+        /// 实时数据层访问对象
+        /// </summary>
+        private ActualDataBLL actualDataBll = new ActualDataBLL();
+
+        /// <summary>
+        ///当前窗体的页面索引
+        /// </summary>
+        private int CurrentFrm = 0;
+
+        /// <summary>
+        /// 需要在窗体的构造函数中初始化，窗体关闭时关闭
+        /// 使用System.Timers.Timer对象，需要跨现场操作，需要使用this.Invoke(new Action(()=>{}));
+        /// </summary>
+        private System.Timers.Timer timer = new System.Timers.Timer();
+
+        /// <summary>
+        /// 当前NaviButton的集合 
+        /// </summary>
+        private List<NaviButton> listNaviButton = new List<NaviButton>();
+        private string CurrentTime { get { return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); } }
         #endregion
 
         #region ModbusTCP通信，多线程读取数据
@@ -202,14 +314,14 @@ namespace Wen.THproject
                                 //处理
                                 foreach (Variable var in item.VarList)
                                 {
-                                    DataType dataType =(DataType) Enum.Parse(typeof(DataType), var.DataType, true);
+                                    DataType dataType = (DataType)Enum.Parse(typeof(DataType), var.DataType, true);
                                     int start = var.Start-item.Start;
                                     switch (dataType)
                                     {
                                         case DataType.Bool:
-                                                var.VarValue=BitLib.GetBitFromByteArray(data,start,var.OffsetORLength);
-                                                break;
-                                            default : break;
+                                            var.VarValue=BitLib.GetBitFromByteArray(data, start, var.OffsetORLength);
+                                            break;
+                                        default: break;
                                     }
                                     //处理，线圈，直接更新数据
                                     decive.UpdateVariable(var);
@@ -251,13 +363,13 @@ namespace Wen.THproject
                                 //对应short，int，为大端ABCD
                                 foreach (Variable var in item.VarList)
                                 {
-                                    DataType dataType = (DataType)Enum.Parse(typeof(DataType),var.DataType,true);
-                                    int start=var.Start-item.Start;
+                                    DataType dataType = (DataType)Enum.Parse(typeof(DataType), var.DataType, true);
+                                    int start = var.Start-item.Start;
                                     start=start*2;
                                     switch (dataType)
                                     {
                                         case DataType.Bool:
-                                            var.VarValue=BitLib.GetBitFrom2BytesArray(data,start,var.OffsetORLength,(CommonModel.dataFormat==DataFormat.DCBA||CommonModel.dataFormat==DataFormat.BADC));
+                                            var.VarValue=BitLib.GetBitFrom2BytesArray(data, start, var.OffsetORLength, (CommonModel.dataFormat==DataFormat.DCBA||CommonModel.dataFormat==DataFormat.BADC));
                                             break;
                                         case DataType.Short:
                                             var.VarValue=ShortLib.GetShortFromByteArray(data, start, CommonModel.dataFormat);
@@ -284,13 +396,13 @@ namespace Wen.THproject
                                             var.VarValue=ULongLib.GetULongFromByteArray(data, start, CommonModel.dataFormat);
                                             break;
                                         case DataType.String:
-                                            var.VarValue=StringLib.GetStringFromByteArrayByEncoding(data,start,var.OffsetORLength,Encoding.ASCII);
+                                            var.VarValue=StringLib.GetStringFromByteArrayByEncoding(data, start, var.OffsetORLength, Encoding.ASCII);
                                             break;
                                         case DataType.ByteArray:
-                                            var.VarValue=ByteArrayLib.GetByteArrayFromByteArray(data,start,var.OffsetORLength);
+                                            var.VarValue=ByteArrayLib.GetByteArrayFromByteArray(data, start, var.OffsetORLength);
                                             break;
                                         case DataType.HexString:
-                                            var.VarValue=StringLib.GetHexStringFromByteArray(data,start,var.OffsetORLength);
+                                            var.VarValue=StringLib.GetHexStringFromByteArray(data, start, var.OffsetORLength);
                                             break;
                                         default:
                                             break;
@@ -326,7 +438,7 @@ namespace Wen.THproject
                     }
                     else
                     {
-                        CommonModel.AddLog(decive.IsConnected ? 0 : 1, decive.IsConnected ? "控制器初次连接成功" : "控制器初次连接失败");
+                        //CommonModel.AddLog(decive.IsConnected ? 0 : 1, decive.IsConnected ? "控制器初次连接成功" : "控制器初次连接失败");
                         decive.ReConnectSign=true;
                     }
                 }
@@ -345,6 +457,12 @@ namespace Wen.THproject
             DialogResult dr = new FrmMsgBoxWithAck("确认退出程序", "结束").ShowDialog();
             if (dr==DialogResult.OK)
             {
+                //关闭定时器，关闭写入数据
+                this.timer.Stop();
+                //将ModbusTCP通信关闭
+                CommonModel.Modbus?.DisConnect();
+                //关闭读取数据读取多线程的，取消信号源
+                this.cts?.Cancel();
                 this.Close();
             }
         }
@@ -365,6 +483,53 @@ namespace Wen.THproject
                 {
                     //在里面进行窗体的切换，判断控件的自定义属性TitelName来判断，切换成什么窗体
                     FormNames frm = (FormNames)Enum.Parse(typeof(FormNames), navi.TitleName, true);
+
+                    //将用户权限添加在这里,将设定的FormNames枚举值传递给权限管理,不需要集中监控和临时窗体
+                    //在的得到窗体名，之后判断当前用户的是否有切换当前窗体的选限
+                    //提示当前用户没有权限打开窗体，请切换权限
+                    switch (frm)
+                    {
+                        case FormNames.参数设置:
+                            if (!CommonModel.CurrentAdmin.ParamSet)
+                            {
+                                new FrmMsgBoxWithoutAck("当前用户没有权限进入参数设置界面","请切换用户").ShowDialog();
+                                return;
+                            }
+                            break;
+                        case FormNames.配方管理:
+                            if (!CommonModel.CurrentAdmin.Recipe)
+                            {
+                                new FrmMsgBoxWithoutAck("当前用户没有权限进入配方管理界面", "请切换用户").ShowDialog();
+                                return;
+                            }
+                            break;
+                        case FormNames.报警追溯:
+                            if (!CommonModel.CurrentAdmin.HistoryLog)
+                            {
+                                new FrmMsgBoxWithoutAck("当前用户没有权限进入报警追溯界面", "请切换用户").ShowDialog();
+                                return;
+                            }
+                            break;
+                        case FormNames.历史趋势:
+                            if (!CommonModel.CurrentAdmin.HistoryTrend)
+                            {
+                                new FrmMsgBoxWithoutAck("当前用户没有权限进入历史趋势界面", "请切换用户").ShowDialog();
+                                return;
+                            }
+                            break;
+                        case FormNames.用户管理:
+                            if (!CommonModel.CurrentAdmin.UserMange)
+                            {
+                                new FrmMsgBoxWithoutAck("当前用户没有权限进入用户管理界面", "请切换用户").ShowDialog();
+                                return;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    //每次切换窗体，都需将其改到当前窗体的索引上去
+                    this.CurrentFrm=this.listNaviButton.IndexOf(navi);
+
                     OpenForm(this.MainPanel, frm);
                     //设定主窗体Title，
                     SetTitel(this.lbl_Title, frm);
@@ -517,10 +682,13 @@ namespace Wen.THproject
         /// <param name="e"></param>
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            //更新用户名称
+            this.lbl_User.Text=CommonModel.CurrentAdmin.LoginName;
+
             //打开对应的窗体
             CommonNaviButton_Click(this.naviButton1, null);
             //初始化得到Decive的初始化信息
-            CommonModel.Decive=LoadDevice(decPath,groupPath,variablePath);
+            CommonModel.Decive=LoadDevice(decPath, groupPath, variablePath);
             //判断信息是否为空
             if (CommonModel.Decive!=null)
             {
@@ -529,10 +697,12 @@ namespace Wen.THproject
                 //添加CommonModel.Decive中的报警事件
                 CommonModel.Decive.AlarmTrigEvent+=Decive_AlarmTrigEvent;
                 //执行多线程连接硬件，执行读取数据
-                Task.Run(new Action(()=>
+                Task.Run(new Action(() =>
                 {
                     DeciveCommunication(CommonModel.Decive);
-                }),cts.Token);
+                }), cts.Token);
+                //执行存储数据
+                this.timer.Start();
             }
         }
 
@@ -547,31 +717,45 @@ namespace Wen.THproject
         /// 报警触发事件
         /// </summary>
         /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
+        /// <param name="variable"></param>
         /// <exception cref="NotImplementedException"></exception>
-        private void Decive_AlarmTrigEvent(bool arg1, Variable arg2)
+        private void Decive_AlarmTrigEvent(bool ackType, Variable variable)
         {
             //true,触发报警
-            if (arg1)
+            if (ackType)
             {
-                CommonModel.AddLog(1,"触发"+arg2.Remark);
-                if (!this.actualAlarmList.Contains(arg2.Remark))
+                CommonModel.AddLog(1, "触发"+variable.Remark);
+                //当程序启动中，所存在的报警信息存储到数据库中
+                sysLogBll.AddLog(new SysLogModel()
                 {
-                    actualAlarmList.Add(arg2.Remark);
+                    InsertTime=CurrentTime,
+                    Note=variable.Remark,
+                    AlarmType="触发",
+                    Operator=CommonModel.CurrentAdmin.LoginName,
+                    VarName=variable.VarName
+                });
+                if (!this.actualAlarmList.Contains(variable.Remark))
+                {
+                    actualAlarmList.Add(variable.Remark);
                 }
             }
-            else 
+            else
             {
-                CommonModel.AddLog(0,"消除"+arg2.Remark);
-                if (this.actualAlarmList.Contains(arg2.Remark))
+                CommonModel.AddLog(0, "消除"+variable.Remark);
+                sysLogBll.AddLog(new SysLogModel()
                 {
-                    actualAlarmList.Remove(arg2.Remark);
+                    InsertTime=CurrentTime,
+                    Note=variable.Remark,
+                    AlarmType="消除",
+                    Operator=CommonModel.CurrentAdmin.LoginName,
+                    VarName=variable.VarName
+                });
+                if (this.actualAlarmList.Contains(variable.Remark))
+                {
+                    actualAlarmList.Remove(variable.Remark);
                 }
             }
         }
-
-        //可以监视的集合,动态可监视的集合，可以在项目，添加，删除或刷新整个列表的提供通知，
-        private ObservableCollection<string> actualAlarmList=new ObservableCollection<string>();
 
         //CollectionChanged这个事件
         //根据集合的数量进行处理
@@ -584,7 +768,7 @@ namespace Wen.THproject
         /// <exception cref="NotImplementedException"></exception>
         private void ActualAlarmList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            this.Invoke(new Action(() => 
+            this.Invoke(new Action(() =>
             {
                 switch (this.actualAlarmList.Count)
                 {
@@ -592,10 +776,79 @@ namespace Wen.THproject
                         this.scrollingAlarm.Text="当前系统无报警";
                         break;
                     default:
-                        this.scrollingAlarm.Text=string.Join("   ",actualAlarmList);
+                        this.scrollingAlarm.Text=string.Join("   ", actualAlarmList);
                         break;
                 }
             }));
         }
+
+        /// <summary>
+        /// 关闭系统时钟
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.timer.Stop();
+        }
+
+
+        #region 移动无框窗体
+        private Point point;
+        /// <summary>
+        /// 得到鼠标左键的坐标
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            point=new Point(e.X, e.Y);
+        }
+        /// <summary>
+        /// 移动到鼠标左键拖动的地方
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button==MouseButtons.Left)
+            {
+                //修改窗体的位置，得到移动
+                this.Location=new Point(this.Location.X+e.X-point.X, this.Location.Y+e.Y-point.Y);
+            }
+        }
+        #endregion
+
+        #region 将窗体左右移位1个窗体
+        /// <summary>
+        /// 当前窗体向左切换一个
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Left_Click(object sender, EventArgs e)
+        {
+            int num = this.CurrentFrm-1;
+            if (num<0)
+            {
+                num=5;
+            }
+            CommonNaviButton_Click(listNaviButton[num],null);
+        }
+
+        /// <summary>
+        /// 当前窗体向右切换一个
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int num = this.CurrentFrm+1;
+            if (num>=6)
+            {
+                num=0;
+            }
+            CommonNaviButton_Click(listNaviButton[num],null);
+        }
+        #endregion
     }
 }

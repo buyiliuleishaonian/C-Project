@@ -130,9 +130,8 @@ namespace Wen.THproject
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            //更新我的限制，
+            //更新我的限制
             GetLimitParams();
-
         }
         //封装一个限制
         /// <summary>
@@ -140,19 +139,22 @@ namespace Wen.THproject
         /// </summary>
         private void GetLimitParams()
         {
-            //遍历mainpanel容器中所有的TextSet控件
-            //判断绑定变量名不可以为空（模块的高低限变量）
-            //然后通过CommonModel.Decive的来进行数值的读取
-            //同理绑定（模块温湿度高），模块报警异常
-            foreach (var item in PanelMain.Controls.OfType<TextSet>())
+            if (CommonModel.Decive.IsConnected)
             {
-                if (item.BindVarName!=null&&item.BindVarName.ToString().Trim().Length>0)
+                //遍历mainpanel容器中所有的TextSet控件
+                //判断绑定变量名不可以为空（模块的高低限变量）
+                //然后通过CommonModel.Decive的来进行数值的读取
+                //同理绑定（模块温湿度高），模块报警异常
+                foreach (var item in PanelMain.Controls.OfType<TextSet>())
                 {
-                    item.CurrentValue=CommonModel.Decive[item.BindVarName].ToString();
-                }
-                if (item.AlarmVarName!=null&&item.AlarmVarName.ToString().Trim().Length>0)
-                {
-                    item.IsAlarm=string.Equals(CommonModel.Decive[item.AlarmVarName].ToString(), "True");
+                    if (item.BindVarName!=null&&item.BindVarName.ToString().Trim().Length>0)
+                    {
+                        item.CurrentValue=CommonModel.Decive[item.BindVarName].ToString();
+                    }
+                    if (item.AlarmVarName!=null&&item.AlarmVarName.ToString().Trim().Length>0)
+                    {
+                        item.IsAlarm=string.Equals(CommonModel.Decive[item.AlarmVarName].ToString(), "True");
+                    }
                 }
             }
 
@@ -162,13 +164,16 @@ namespace Wen.THproject
         /// </summary>
         private void GetAlarmParams()
         {
-            //遍历mainpanel容器中所有的CheckBoxEX控件
-            //判断是否启用那个报警控件
-            foreach (var item in PanelMain.Controls.OfType<CheckBoxEX>())
+            if (CommonModel.Decive.IsConnected)
             {
-                if (item.Tag!=null&&item.Tag.ToString().Trim().Length>0)
+                //遍历mainpanel容器中所有的CheckBoxEX控件
+                //判断是否启用那个报警控件
+                foreach (var item in PanelMain.Controls.OfType<CheckBoxEX>())
                 {
-                    item.Checked=string.Equals(CommonModel.Decive[item.Tag.ToString()].ToString(), "1");
+                    if (item.Tag!=null&&item.Tag.ToString().Trim().Length>0)
+                    {
+                        item.Checked=string.Equals(CommonModel.Decive[item.Tag.ToString()].ToString(), "1");
+                    }
                 }
             }
         }
@@ -208,7 +213,7 @@ namespace Wen.THproject
             {
                 if (check.Tag!=null&&check.Tag.ToString().Trim().Length>0)
                 {
-                    bool result=CommonModel.CommonWrite(check.Tag.ToString(),check.Checked?"1":"0");
+                    bool result = CommonModel.CommonWrite(check.Tag.ToString(), check.Checked ? "1" : "0");
                     if (result==false)
                     {
                         check.CheckedChanged-=CommonCheckBoxEX_CheckedChanged;

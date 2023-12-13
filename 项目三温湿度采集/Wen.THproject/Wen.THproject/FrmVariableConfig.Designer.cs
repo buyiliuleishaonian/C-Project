@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVariableConfig));
             this.panelEx1 = new Wen.ControlLib.PanelEx();
             this.nud_Offset = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
@@ -45,6 +46,16 @@
             this.txt_VarIableName = new System.Windows.Forms.TextBox();
             this.cmb_GroupName = new System.Windows.Forms.ComboBox();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
+            this.VariableName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OffsetOrLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Offset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PosAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NegAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除通信组ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Update = new System.Windows.Forms.Button();
@@ -60,16 +71,6 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.btn_Close = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.VariableName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OffsetOrLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Offset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PosAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NegAlarm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Offset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Salce)).BeginInit();
@@ -117,6 +118,8 @@
             this.panelEx1.Size = new System.Drawing.Size(1121, 629);
             this.panelEx1.TabIndex = 0;
             this.panelEx1.TopGap = 1;
+            this.panelEx1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.panelEx1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             // 
             // nud_Offset
             // 
@@ -315,6 +318,76 @@
             this.dgv_Main.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_Main_CellFormatting);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             // 
+            // VariableName
+            // 
+            this.VariableName.DataPropertyName = "VarName";
+            this.VariableName.HeaderText = "变量名称";
+            this.VariableName.Name = "VariableName";
+            this.VariableName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Start
+            // 
+            this.Start.DataPropertyName = "Start";
+            this.Start.HeaderText = "起始索引";
+            this.Start.Name = "Start";
+            this.Start.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // OffsetOrLength
+            // 
+            this.OffsetOrLength.DataPropertyName = "OffSetOrLength";
+            this.OffsetOrLength.HeaderText = "位偏移/长度";
+            this.OffsetOrLength.Name = "OffsetOrLength";
+            this.OffsetOrLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // DataType
+            // 
+            this.DataType.DataPropertyName = "DataType";
+            this.DataType.HeaderText = "数据类型";
+            this.DataType.Name = "DataType";
+            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Scale
+            // 
+            this.Scale.DataPropertyName = "Scale";
+            this.Scale.HeaderText = "线性系数";
+            this.Scale.Name = "Scale";
+            this.Scale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Offset
+            // 
+            this.Offset.DataPropertyName = "Offset";
+            this.Offset.HeaderText = "偏移量";
+            this.Offset.Name = "Offset";
+            this.Offset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // PosAlarm
+            // 
+            this.PosAlarm.DataPropertyName = "PosAlarm";
+            this.PosAlarm.HeaderText = "上升沿";
+            this.PosAlarm.Name = "PosAlarm";
+            this.PosAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NegAlarm
+            // 
+            this.NegAlarm.DataPropertyName = "NegAlarm";
+            this.NegAlarm.HeaderText = "下降沿";
+            this.NegAlarm.Name = "NegAlarm";
+            this.NegAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // GroupName
+            // 
+            this.GroupName.DataPropertyName = "GroupName";
+            this.GroupName.HeaderText = "通信组";
+            this.GroupName.Name = "GroupName";
+            this.GroupName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Remark
+            // 
+            this.Remark.DataPropertyName = "Remark";
+            this.Remark.HeaderText = "备注";
+            this.Remark.Name = "Remark";
+            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -491,76 +564,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "变量配置";
             // 
-            // VariableName
-            // 
-            this.VariableName.DataPropertyName = "VarName";
-            this.VariableName.HeaderText = "变量名称";
-            this.VariableName.Name = "VariableName";
-            this.VariableName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Start
-            // 
-            this.Start.DataPropertyName = "Start";
-            this.Start.HeaderText = "起始索引";
-            this.Start.Name = "Start";
-            this.Start.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // OffsetOrLength
-            // 
-            this.OffsetOrLength.DataPropertyName = "OffSetOrLength";
-            this.OffsetOrLength.HeaderText = "位偏移/长度";
-            this.OffsetOrLength.Name = "OffsetOrLength";
-            this.OffsetOrLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // DataType
-            // 
-            this.DataType.DataPropertyName = "DataType";
-            this.DataType.HeaderText = "数据类型";
-            this.DataType.Name = "DataType";
-            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Scale
-            // 
-            this.Scale.DataPropertyName = "Scale";
-            this.Scale.HeaderText = "线性系数";
-            this.Scale.Name = "Scale";
-            this.Scale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Offset
-            // 
-            this.Offset.DataPropertyName = "Offset";
-            this.Offset.HeaderText = "偏移量";
-            this.Offset.Name = "Offset";
-            this.Offset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // PosAlarm
-            // 
-            this.PosAlarm.DataPropertyName = "PosAlarm";
-            this.PosAlarm.HeaderText = "上升沿";
-            this.PosAlarm.Name = "PosAlarm";
-            this.PosAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // NegAlarm
-            // 
-            this.NegAlarm.DataPropertyName = "NegAlarm";
-            this.NegAlarm.HeaderText = "下降沿";
-            this.NegAlarm.Name = "NegAlarm";
-            this.NegAlarm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // GroupName
-            // 
-            this.GroupName.DataPropertyName = "GroupName";
-            this.GroupName.HeaderText = "通信组";
-            this.GroupName.Name = "GroupName";
-            this.GroupName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Remark
-            // 
-            this.Remark.DataPropertyName = "Remark";
-            this.Remark.HeaderText = "备注";
-            this.Remark.Name = "Remark";
-            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // FrmVariableConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -570,11 +573,10 @@
             this.ClientSize = new System.Drawing.Size(1121, 629);
             this.Controls.Add(this.panelEx1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmVariableConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmGroupConfig";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Offset)).EndInit();

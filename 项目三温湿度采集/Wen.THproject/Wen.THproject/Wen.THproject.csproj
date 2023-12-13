@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonModel.cs" />
+    <Compile Include="FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmModify.resx">
       <DependentUpon>FrmModify.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,6 +259,10 @@
     <ProjectReference Include="..\Wen.ControlLib\Wen.ControlLib.csproj">
       <Project>{63E05AFC-B6D4-4796-B301-CFE934F3871E}</Project>
       <Name>Wen.ControlLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wen.MTHBLL\Wen.MTHBLL.csproj">
+      <Project>{4f651a15-b008-405c-a1f3-74e60d163d8f}</Project>
+      <Name>Wen.MTHBLL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

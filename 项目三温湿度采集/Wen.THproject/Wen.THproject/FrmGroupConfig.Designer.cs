@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmGroupConfig));
             this.panelEx1 = new Wen.ControlLib.PanelEx();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,6 +95,8 @@
             this.panelEx1.Size = new System.Drawing.Size(792, 514);
             this.panelEx1.TabIndex = 0;
             this.panelEx1.TopGap = 1;
+            this.panelEx1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.panelEx1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             // 
             // dgv_Main
             // 
@@ -409,11 +412,10 @@
             this.ClientSize = new System.Drawing.Size(792, 514);
             this.Controls.Add(this.panelEx1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmGroupConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmGroupConfig";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();

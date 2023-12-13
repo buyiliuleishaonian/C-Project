@@ -43,6 +43,7 @@
             this.MiddlePanel = new System.Windows.Forms.Panel();
             this.lbl_ConnectInfo = new System.Windows.Forms.Label();
             this.AlarmPanel = new System.Windows.Forms.Panel();
+            this.scrollingAlarm = new SeeSharpTools.JY.GUI.ScrollingText();
             this.lbl_Title = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_Left = new System.Windows.Forms.Button();
@@ -52,7 +53,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.corePanel = new Wen.ControlLib.PanelEx();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.scrollingAlarm = new SeeSharpTools.JY.GUI.ScrollingText();
+            this.led_CommState = new SeeSharpTools.JY.GUI.LED();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.MiddlePanel.SuspendLayout();
@@ -80,6 +81,8 @@
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(1440, 133);
             this.TopPanel.TabIndex = 0;
+            this.TopPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.TopPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             // 
             // naviButton6
             // 
@@ -195,7 +198,7 @@
             // 
             this.lbl_TitleName.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbl_TitleName.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_TitleName.Location = new System.Drawing.Point(458, 26);
+            this.lbl_TitleName.Location = new System.Drawing.Point(515, 20);
             this.lbl_TitleName.Name = "lbl_TitleName";
             this.lbl_TitleName.Size = new System.Drawing.Size(410, 53);
             this.lbl_TitleName.TabIndex = 2;
@@ -226,6 +229,7 @@
             // MiddlePanel
             // 
             this.MiddlePanel.BackColor = System.Drawing.Color.Transparent;
+            this.MiddlePanel.Controls.Add(this.led_CommState);
             this.MiddlePanel.Controls.Add(this.lbl_ConnectInfo);
             this.MiddlePanel.Controls.Add(this.AlarmPanel);
             this.MiddlePanel.Controls.Add(this.lbl_Title);
@@ -240,6 +244,8 @@
             this.MiddlePanel.Name = "MiddlePanel";
             this.MiddlePanel.Size = new System.Drawing.Size(1440, 67);
             this.MiddlePanel.TabIndex = 1;
+            this.MiddlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.MiddlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             // 
             // lbl_ConnectInfo
             // 
@@ -261,12 +267,33 @@
             this.AlarmPanel.Size = new System.Drawing.Size(285, 38);
             this.AlarmPanel.TabIndex = 10;
             // 
+            // scrollingAlarm
+            // 
+            this.scrollingAlarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(28)))), ((int)(((byte)(68)))));
+            this.scrollingAlarm.BorderColor = System.Drawing.Color.Transparent;
+            this.scrollingAlarm.BorderVisible = true;
+            this.scrollingAlarm.Cursor = System.Windows.Forms.Cursors.Default;
+            this.scrollingAlarm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollingAlarm.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold);
+            this.scrollingAlarm.ForeColor = System.Drawing.Color.White;
+            this.scrollingAlarm.Location = new System.Drawing.Point(0, 0);
+            this.scrollingAlarm.Name = "scrollingAlarm";
+            this.scrollingAlarm.Padding = new System.Windows.Forms.Padding(3);
+            this.scrollingAlarm.ScrollDirection = SeeSharpTools.JY.GUI.ScrollingText.TextDirection.RightToLeft;
+            this.scrollingAlarm.ScrollSpeed = 25;
+            this.scrollingAlarm.Size = new System.Drawing.Size(285, 38);
+            this.scrollingAlarm.TabIndex = 0;
+            this.scrollingAlarm.Text = "当前系统无报警";
+            this.scrollingAlarm.VerticleAligment = SeeSharpTools.JY.GUI.ScrollingText.TextVerticalAlignment.Center;
+            this.scrollingAlarm.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.scrollingAlarm.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
+            // 
             // lbl_Title
             // 
             this.lbl_Title.Font = new System.Drawing.Font("微软雅黑", 13F, System.Drawing.FontStyle.Bold);
             this.lbl_Title.ForeColor = System.Drawing.Color.Cyan;
             this.lbl_Title.Image = ((System.Drawing.Image)(resources.GetObject("lbl_Title.Image")));
-            this.lbl_Title.Location = new System.Drawing.Point(592, 0);
+            this.lbl_Title.Location = new System.Drawing.Point(631, 1);
             this.lbl_Title.Name = "lbl_Title";
             this.lbl_Title.Size = new System.Drawing.Size(184, 49);
             this.lbl_Title.TabIndex = 9;
@@ -280,12 +307,13 @@
             this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button1.ForeColor = System.Drawing.Color.Transparent;
             this.button1.Image = global::Wen.THproject.Properties.Resources.Regith;
-            this.button1.Location = new System.Drawing.Point(793, 7);
+            this.button1.Location = new System.Drawing.Point(832, 8);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(57, 43);
             this.button1.TabIndex = 8;
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btn_Left
             // 
@@ -294,12 +322,13 @@
             this.btn_Left.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btn_Left.ForeColor = System.Drawing.Color.Transparent;
             this.btn_Left.Image = ((System.Drawing.Image)(resources.GetObject("btn_Left.Image")));
-            this.btn_Left.Location = new System.Drawing.Point(519, 7);
+            this.btn_Left.Location = new System.Drawing.Point(558, 8);
             this.btn_Left.Name = "btn_Left";
             this.btn_Left.Size = new System.Drawing.Size(57, 43);
             this.btn_Left.TabIndex = 4;
             this.btn_Left.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.btn_Left.UseVisualStyleBackColor = true;
+            this.btn_Left.Click += new System.EventHandler(this.btn_Left_Click);
             // 
             // lbl_CurrentTime
             // 
@@ -308,9 +337,9 @@
             this.lbl_CurrentTime.ForeColor = System.Drawing.Color.Transparent;
             this.lbl_CurrentTime.Location = new System.Drawing.Point(264, 16);
             this.lbl_CurrentTime.Name = "lbl_CurrentTime";
-            this.lbl_CurrentTime.Size = new System.Drawing.Size(230, 22);
+            this.lbl_CurrentTime.Size = new System.Drawing.Size(288, 22);
             this.lbl_CurrentTime.TabIndex = 7;
-            this.lbl_CurrentTime.Text = "2023年10月25日10：25：00";
+            this.lbl_CurrentTime.Text = "2023年10月25日10：25：00  星期一";
             // 
             // lbl_User
             // 
@@ -368,25 +397,25 @@
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(1420, 720);
             this.MainPanel.TabIndex = 0;
+            this.MainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
+            this.MainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseMove);
             // 
-            // scrollingAlarm
+            // led_CommState
             // 
-            this.scrollingAlarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(28)))), ((int)(((byte)(68)))));
-            this.scrollingAlarm.BorderColor = System.Drawing.Color.Transparent;
-            this.scrollingAlarm.BorderVisible = true;
-            this.scrollingAlarm.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scrollingAlarm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrollingAlarm.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold);
-            this.scrollingAlarm.ForeColor = System.Drawing.Color.White;
-            this.scrollingAlarm.Location = new System.Drawing.Point(0, 0);
-            this.scrollingAlarm.Name = "scrollingAlarm";
-            this.scrollingAlarm.Padding = new System.Windows.Forms.Padding(3);
-            this.scrollingAlarm.ScrollDirection = SeeSharpTools.JY.GUI.ScrollingText.TextDirection.RightToLeft;
-            this.scrollingAlarm.ScrollSpeed = 25;
-            this.scrollingAlarm.Size = new System.Drawing.Size(285, 38);
-            this.scrollingAlarm.TabIndex = 0;
-            this.scrollingAlarm.Text = "当前系统无报警";
-            this.scrollingAlarm.VerticleAligment = SeeSharpTools.JY.GUI.ScrollingText.TextVerticalAlignment.Center;
+            this.led_CommState.BlinkColor = System.Drawing.Color.Lime;
+            this.led_CommState.BlinkInterval = 1000;
+            this.led_CommState.BlinkOn = false;
+            this.led_CommState.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.led_CommState.Interacton = SeeSharpTools.JY.GUI.LED.InteractionStyle.Indicator;
+            this.led_CommState.Location = new System.Drawing.Point(1357, 8);
+            this.led_CommState.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.led_CommState.Name = "led_CommState";
+            this.led_CommState.OffColor = System.Drawing.Color.Red;
+            this.led_CommState.OnColor = System.Drawing.Color.Green;
+            this.led_CommState.Size = new System.Drawing.Size(46, 45);
+            this.led_CommState.Style = SeeSharpTools.JY.GUI.LED.LedStyle.Circular;
+            this.led_CommState.TabIndex = 12;
+            this.led_CommState.Value = false;
             // 
             // FrmMain
             // 
@@ -404,7 +433,7 @@
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.TopPanel.ResumeLayout(false);
             this.TopPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -443,6 +472,7 @@
         private ControlLib.PanelEx corePanel;
         private System.Windows.Forms.Panel MainPanel;
         private SeeSharpTools.JY.GUI.ScrollingText scrollingAlarm;
+        private SeeSharpTools.JY.GUI.LED led_CommState;
     }
 }
 

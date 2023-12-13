@@ -45,12 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActualData.cs" />
     <Compile Include="Decive.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecipeInfo.cs" />
     <Compile Include="RecipeParam.cs" />
+    <Compile Include="SysAdminModel.cs" />
+    <Compile Include="SysLogModel.cs" />
     <Compile Include="Variable.cs" />
   </ItemGroup>
   <ItemGroup>
