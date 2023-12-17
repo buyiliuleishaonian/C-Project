@@ -22,7 +22,14 @@ namespace IniHelperDemo
         #endregion
 
         #region 读Ini文件
-
+        /// <summary>
+        /// 查询INI文件中的指定配置项
+        /// </summary>
+        /// <param name="Section">标题名</param>
+        /// <param name="Key">键值对</param>
+        /// <param name="NoText">当找不到键值对时返回的参数</param>
+        /// <param name="iniFilePath">文件路径</param>
+        /// <returns></returns>
         public static string ReadIniData(string Section, string Key, string NoText, string iniFilePath)
         {
             if (File.Exists(iniFilePath))

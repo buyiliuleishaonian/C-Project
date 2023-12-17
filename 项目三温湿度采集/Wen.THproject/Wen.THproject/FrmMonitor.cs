@@ -59,7 +59,7 @@ namespace Wen.THproject
                     list.Add(Convert.ToDouble( CommonModel.Decive[$"模块{i}温度"]));
                     list.Add(Convert.ToDouble(CommonModel.Decive[$"模块{i}湿度"]));
                 }
-                //每次添加12个数据
+                //每次添加12个数据,在这里添加Y轴的数据值
                 this.chart_ActualTrend.PlotSingle(list.ToArray());
             }
         }

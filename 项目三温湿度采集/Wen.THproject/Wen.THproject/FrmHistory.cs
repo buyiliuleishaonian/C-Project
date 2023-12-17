@@ -48,6 +48,7 @@ namespace Wen.THproject
             //1、设置x轴的类型
             //2、设置图列,就是显示对应的曲线的名字
             //3、Y轴的范围，设定Y轴不能缩放
+            //4、显示多少个点位
             this.chart_HistoryTrend.XDataType= SeeSharpTools.JY.GUI.StripChartX.XAxisDataType.String;
             this.chart_HistoryTrend.LegendVisible=true;
             this.chart_HistoryTrend.DisplayPoints=100000;

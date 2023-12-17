@@ -422,6 +422,7 @@ namespace Wen.THproject
                         }
                     }
                 }
+
                 else
                 {
                     //判断是否是第一次连接,2、如果是第一次连接，就将第一次连接的标志位置为true，如果是不是第一次连接，就记录日志
@@ -482,7 +483,7 @@ namespace Wen.THproject
                 if (Enum.IsDefined(typeof(FormNames), navi.TitleName))
                 {
                     //在里面进行窗体的切换，判断控件的自定义属性TitelName来判断，切换成什么窗体
-                    FormNames frm = (FormNames)Enum.Parse(typeof(FormNames), navi.TitleName, true);
+                    FormNames frm = (FormNames)Enum.Parse(typeof(FormNames), navi.TitleName,true);
 
                     //将用户权限添加在这里,将设定的FormNames枚举值传递给权限管理,不需要集中监控和临时窗体
                     //在的得到窗体名，之后判断当前用户的是否有切换当前窗体的选限

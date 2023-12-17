@@ -17,7 +17,7 @@ namespace MTHModels
         /// 通信组Group集合
         /// </summary>
         public List<Group> GroupList { get; set; }   
-
+        
         /// <summary>
         /// ip地址
         /// </summary>

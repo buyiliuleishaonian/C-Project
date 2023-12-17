@@ -24,7 +24,9 @@ namespace Wen.ControlLib
             this.SetStyle(ControlStyles.DoubleBuffer, true);
             ////表明控件在调整大小之后重绘
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+            //表明控件可以被选中
             this.SetStyle(ControlStyles.Selectable,true);
+            //表明控件的透明度
             this.SetStyle(ControlStyles.SupportsTransparentBackColor,true);
 
             stringFormat.Alignment = StringAlignment.Center;
