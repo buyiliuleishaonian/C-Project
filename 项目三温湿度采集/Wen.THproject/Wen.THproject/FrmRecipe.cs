@@ -191,10 +191,10 @@ namespace Wen.THproject
                 List<short> dataList = new List<short>();
                 for (int i = 0; i < info.RecipeParamList.Count; i++)
                 {
-                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].TempHight*10));
-                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].TempLow *10));
-                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].HumidityHight * 10));
-                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].HumidityLow*10));
+                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].TempHight));
+                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].TempLow ));
+                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].HumidityHight ));
+                    dataList.Add(Convert.ToInt16(info.RecipeParamList[i].HumidityLow));
                 }
                 //添加空闲地址
                 for (int i = 0; i < 24; i++)
